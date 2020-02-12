@@ -1,0 +1,35 @@
+.todoapp {
+  margin-left: 30% !important;
+  margin-right: 30% !important;
+  display: block;
+  position: relative;
+  background: #FFF;
+  margin: 130px 0 40px 0;
+  box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.2), 0 2px 4px 0 rgb(0,0,0,0.1);
+}
+
+.todoapp h1 {
+  font-size: 100px;
+  font-weight: 100;
+  margin: 0;
+  position: absolute;
+  top: -125px;
+  text-align: center;
+  width: 100%;
+  color: rgba(89, 55, 73, 0.5);
+}
+
+.new-todo {
+  border: none;
+  padding: 16px 16px 16px 60px;
+  background: rgba(0, 0, 0, 0.003);
+  box-shadow: inset 1px 1px 2px 0 rgb(0, 0, 0, 0.1);
+}
+
+.new-todo, edit {
+  font-size: 20px;
+  color: rgba(89, 55, 73, 0.5);
+  width: 100%;
+  outline: none;
+  box-sizing: border-box;
+}
