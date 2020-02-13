@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import 'normalize.css';
 import './App.css';
 import TodoItem from './TodoItems.js';
+import Footer from './Footer.js'
 
 const ENTER_KEY = 13;
 
@@ -14,6 +14,7 @@ class App extends Component {
     }
     this.handleOnTextEnter = this.handleOnTextEnter.bind(this);
     this.handleOnTextChange = this.handleOnTextChange.bind(this);
+    this.handleOnClearCompleted = this.handleOnClearCompleted.bind(this);
   }
 
   handleOnTextChange(e) {
@@ -35,8 +36,11 @@ class App extends Component {
     }
   }
 
+  handleOnClearCompleted(){
+    this.props.model.clearCompleted();
+  }
+
   toggle(todoToToggle){
-    todoToToggle.completed = !todoToToggle.completed;
     this.props.model.toggle(todoToToggle);
   }
 
@@ -46,7 +50,16 @@ class App extends Component {
 
   render() {
     var that = this;
-    var todoItems = this.props.model.todos.map(function(todo){
+
+    var allTodos = this.props.model.todos;
+
+    var activeTodoCount = allTodos.reduce(function(accum, todo){
+        return todo.completed ? accum : accum + 1;
+    }, 0);
+
+    var completedCount = allTodos.length - activeTodoCount;
+
+    var todoItems = allTodos.map(function(todo){
       return (
         <TodoItem 
           key={todo.id} 
@@ -55,7 +68,14 @@ class App extends Component {
           onToggle={that.toggle.bind(that, todo)}
           />
       );
-    }); 
+    });
+
+    var footer = (
+        <Footer completedCount={completedCount}
+                todoCount={activeTodoCount} 
+                onClearCompleted={this.handleOnClearCompleted}
+                />
+      );
 
     return (
       <div className="todoapp">
@@ -75,6 +95,7 @@ class App extends Component {
             {todoItems}
           </ul>
         </section>
+        {footer}
       </div>
     );
   }

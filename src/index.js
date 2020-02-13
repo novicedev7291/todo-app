@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import 'normalize.css';
 import './index.css';
 
 var app = app || {};
@@ -22,7 +23,9 @@ var app = app || {};
 			for(var i = 0; i < arguments.length; i++){
 				var obj = arguments[i];
 				for(var key in obj){
-					newObj[key] = obj[key];
+					if(obj.hasOwnProperty(key)){
+						newObj[key] = obj[key];
+					}
 				}
 			}
 			return newObj;
@@ -57,7 +60,9 @@ var app = app || {};
 
 	app.model.prototype.toggle = function(todoToToggle){
 		this.todos = this.todos.map(function(todo){
-			return todo !== todoToToggle ? todo : Utils.extend(todoToToggle);
+			return todo !== todoToToggle ? 
+					todo : 
+					Utils.extend({}, todo, {completed: !todo.completed});
 		});
 
 		this.refresh();
@@ -66,6 +71,14 @@ var app = app || {};
 	app.model.prototype.delete = function(todo){
 		this.todos = this.todos.filter(function(candidate){
 			return candidate !== todo;
+		});
+
+		this.refresh();
+	};
+
+	app.model.prototype.clearCompleted = function(){
+		this.todos = this.todos.filter(function(todo){
+			return !todo.completed;
 		});
 
 		this.refresh();
