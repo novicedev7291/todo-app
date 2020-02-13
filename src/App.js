@@ -40,7 +40,9 @@ class App extends Component {
       return (
         <TodoItem 
           key={todo.id} 
-          todo={todo}
+          todo={todo} 
+          onDelete={this.props.model.onDelete.bind(this, todo)}
+          onToggle={this.props.model.onToggle.bind(this, todo)}
           />
       );
     }); 
