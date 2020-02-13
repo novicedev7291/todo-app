@@ -17,6 +17,16 @@ var app = app || {};
 			var store = localStorage.getItem(namespace);
 			return (store && JSON.parse(store)) || [] ;
 		},
+		extend: function() {
+			var newObj = {};
+			for(var i = 0; i < arguments.length; i++){
+				var obj = arguments[i];
+				for(var key in obj){
+					newObj[key] = obj[key];
+				}
+			}
+			return newObj;
+		},
 	};
 
 	var Utils = app.utils;
@@ -42,6 +52,22 @@ var app = app || {};
 			title: title,
 			completed: false
 		});
+		this.refresh();
+	};
+
+	app.model.prototype.toggle = function(todoToToggle){
+		this.todos = this.todos.map(function(todo){
+			return todo !== todoToToggle ? todo : Utils.extend(todoToToggle);
+		});
+
+		this.refresh();
+	};
+
+	app.model.prototype.delete = function(todo){
+		this.todos = this.todos.filter(function(candidate){
+			return candidate !== todo;
+		});
+
 		this.refresh();
 	};
 

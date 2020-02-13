@@ -35,14 +35,24 @@ class App extends Component {
     }
   }
 
+  toggle(todoToToggle){
+    todoToToggle.completed = !todoToToggle.completed;
+    this.props.model.toggle(todoToToggle);
+  }
+
+  delete(todo){
+    this.props.model.delete(todo);
+  }
+
   render() {
+    var that = this;
     var todoItems = this.props.model.todos.map(function(todo){
       return (
         <TodoItem 
           key={todo.id} 
           todo={todo} 
-          onDelete={this.props.model.onDelete.bind(this, todo)}
-          onToggle={this.props.model.onToggle.bind(this, todo)}
+          onDelete={that.delete.bind(that, todo)} 
+          onToggle={that.toggle.bind(that, todo)}
           />
       );
     }); 
